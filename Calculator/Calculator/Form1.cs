@@ -19,7 +19,7 @@ namespace Calculator
 
         bool isTypingNumber = false;
 
-        enum PhepToan { Cong, Tru, Nhan, Chia };
+        enum PhepToan { None, Cong, Tru, Nhan, Chia };
         PhepToan pheptoan;
 
         double nho;
@@ -42,15 +42,16 @@ namespace Calculator
         }
         private void NhapPhepToan(object sender, EventArgs e)
         {
-            TinhKetQua();
+           if (nho != 0)
+                TinhKetQua();
 
             Button btn = (Button)sender;
             switch (btn.Text)
             {
-                case "+": pheptoan = PhepToan.Cong; break;
-                case "-": pheptoan = PhepToan.Tru; break;
-                case "*": pheptoan = PhepToan.Nhan; break;
-                case "/": pheptoan = PhepToan.Chia; break;
+                case "+":pheptoan = PhepToan.Cong; break;
+                case "-":pheptoan = PhepToan.Tru; break;
+                case "*":pheptoan = PhepToan.Nhan; break;
+                case "/":pheptoan = PhepToan.Chia; break;
             }
 
             nho = double.Parse(lblDisplay.Text);
@@ -79,6 +80,8 @@ namespace Calculator
         {
             TinhKetQua();
             isTypingNumber = false;
+            nho = 0;
+            pheptoan = PhepToan.None;
         }
 
         private void frmMain_KeyPress(object sender, KeyPressEventArgs e)
@@ -119,13 +122,17 @@ namespace Calculator
         private void btnNho_Click(object sender, EventArgs e)
         {
             nho = 0;
-            lblDisplay.ResetText();
+            lblDisplay.Text = "0";
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
             if (lblDisplay.Text.Length > 0)
                 lblDisplay.Text = lblDisplay.Text.Remove(lblDisplay.Text.Length - 1, 1);
+            if (lblDisplay.Text =="")
+            {
+                lblDisplay.Text = "0";
+            }
         }
     }
 }
