@@ -33,6 +33,13 @@ namespace Calculator
         private void NhapSo(string so)
         {
             if (isTypingNumber)
+            {
+                // Xóa số 0 ở đầu số
+                if (lblDisplay.Text == "0")
+                    lblDisplay.Text = "";
+
+                lblDisplay.Text += so;
+            }
                 lblDisplay.Text = lblDisplay.Text + so;
             else
             {
@@ -129,10 +136,25 @@ namespace Calculator
         {
             if (lblDisplay.Text.Length > 0)
                 lblDisplay.Text = lblDisplay.Text.Remove(lblDisplay.Text.Length - 1, 1);
-            if (lblDisplay.Text =="")
+            if (lblDisplay.Text == "")
             {
                 lblDisplay.Text = "0";
             }
+        private void btnThapPhan_Click(object sender, EventArgs e)
+        {
+                    // Kiểm tra xem đã tồn tại dấu chấm trong lblDisplay.Text hay chưa
+                    if (lblDisplay.Text.Contains("."))
+                    {
+                        if (lblDisplay.Text == "0.")
+                        {
+                            lblDisplay.Text = "";
+                            NhapSo("0.");
+                        }
+                        return;
+                    }
+
+                    lblDisplay.Text += ".";   
+            
         }
     }
 }
